@@ -1,12 +1,12 @@
 #[macro_export]
 macro_rules! map {
-    ($([$k:expr]: $v:expr),* $(,)?) => {
+    ($([$key:expr]: $value:expr),* $(,)?) => {
         {
-            let mut temp_vec = std::collections::HashMap::new();
+            let mut temp = std::collections::HashMap::new();
             $(
-                temp_vec.insert($k, $v);
+                temp.insert($key, $value);
             )*
-            temp_vec
+            temp
         }
     };
 }
@@ -18,14 +18,9 @@ mod tests {
     #[test]
     fn test_map() {
         {
-            let map = map! {
-                [1]: "one",
-                [2]: "two",
-                [3]: "three",
-            };
+            let map = map! { [1]: "one", [2]: "two" };
             assert_eq!(map.get(&1), Some(&"one"));
             assert_eq!(map.get(&2), Some(&"two"));
-            assert_eq!(map.get(&3), Some(&"three"));
         }
 
         {
