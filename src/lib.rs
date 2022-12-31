@@ -39,4 +39,34 @@ mod tests {
             assert_eq!(map.get(&"third"), Some(&3));
         }
     }
+
+    #[test]
+    fn test_nested_map() {
+        let map = map! {
+            [1]: map! {
+                [1]: "one",
+                [2]: "two",
+                [3]: "three",
+            },
+            [2]: map! {
+                [1]: "one",
+                [2]: "two",
+                [3]: "three",
+            },
+            [3]: map! {
+                [1]: "one",
+                [2]: "two",
+                [3]: "three",
+            },
+        };
+        assert_eq!(map.get(&1).unwrap().get(&1), Some(&"one"));
+        assert_eq!(map.get(&1).unwrap().get(&2), Some(&"two"));
+        assert_eq!(map.get(&1).unwrap().get(&3), Some(&"three"));
+        assert_eq!(map.get(&2).unwrap().get(&1), Some(&"one"));
+        assert_eq!(map.get(&2).unwrap().get(&2), Some(&"two"));
+        assert_eq!(map.get(&2).unwrap().get(&3), Some(&"three"));
+        assert_eq!(map.get(&3).unwrap().get(&1), Some(&"one"));
+        assert_eq!(map.get(&3).unwrap().get(&2), Some(&"two"));
+        assert_eq!(map.get(&3).unwrap().get(&3), Some(&"three"));
+    }
 }
